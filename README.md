@@ -11,11 +11,11 @@ Problem comes from the cross-domain policy which won't let you share the connect
 
 A workaround is :
 
-* serve non-httpOnly session cookies from the host (here for me server.dev). [express.js line 16]
+* serve non-httpOnly session cookies from the host (here for me server.dev). [session-share.js line 14]
 
-* read via JavaScript and send the connect.sid value as a sessionId parameter when connection to socket.io [client.js line 26:30]
+* read via JavaScript and send the connect.sid value as a sessionId parameter when connection to socket.io [public/index.html line 35:39]
 
-* when handshaking adding the cookie of `connect.sid=socket.handshake.query.sessionId` to the `socket.handshake.headers.cookie` before reading the handshake with the session middleware [socket.js line 32:37]
+* when handshaking adding the cookie of `connect.sid=socket.handshake.query.sessionId` to the `socket.handshake.headers.cookie` before reading the handshake with the session middleware [socket.js line 22:26]
 
 
 # How to Use

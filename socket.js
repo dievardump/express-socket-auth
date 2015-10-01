@@ -26,7 +26,7 @@
         }
         // tells the system to load the session from socket.handshake
         // usually the session is loaded from req.headers.cookie, but socket req is the handshake
-        // and the cookies are situated i socket.handshake.headers.cookie
+        // and the cookies are situated in socket.handshake.headers.cookie
         session(socket.handshake, {}, function(err) {
             if (err) return accept(err);
             console.log('User trying to connect to Socket.io');

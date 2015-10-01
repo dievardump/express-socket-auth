@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/dievardump/express-socket-auth#readme",
   "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
     "express-session": "^1.11.3",
     "session-file-store": "0.0.20",
     "socket.io": "^1.3.7"

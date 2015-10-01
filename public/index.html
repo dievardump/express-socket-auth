@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Hellow</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<input id='input' type='text' value='' /><button id='button'>Connect</button>
+		<script src='./socket.io.js'></script>
+		<script>
+			function getCookie(name) {
+			  var value = "; " + document.cookie;
+			  var parts = value.split("; " + name + "=");
+			  if (parts.length == 2) return decodeURIComponent(parts.pop().split(";").shift());
+			}
+
+			function fetch(url, data, callback) {
+				try {
+					var x = new XMLHttpRequest();
+					x.open(data ? 'POST' : 'GET', url, 1);
+					x.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+					x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+					x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+					x.onreadystatechange = function () {
+						x.readyState > 3 && callback && callback(x.responseText, x);
+					};
+					x.send(data || null);
+				} catch (e) {
+					window.console && console.log(e);
+				}
+			};
+
+
+			function connectServer(cb) {
+				var sessionId = getCookie('connect.sid');
+				var data = { forceNew: true, query : {  } };
+				if (sessionId) {
+					data.query.sessionId = sessionId
+				}
+				
+				console.log('Trying to connect to Socket.io server');
+
+				var server = io('http://socket.dev:8000', data);
+				server.on('error', function (err) {
+					console.log('----- Connection error : [%s]', err);
+					setTimeout(function () {
+						cb();
+					}, 200);
+				});
+				server.on('connect', function (data) {
+					console.log('----- Connection successful with sessionId [%s]', sessionId);
+					setTimeout(function () {
+						cb();
+					}, 200);
+				});
+			}
+
+			if (getCookie('connect.sid')) {
+				console.log('Session cookie Detected');
+				connectServer(function () { });
+			} else {
+				connectServer(function () {
+					console.log('Call ./authenticate to create session server side');
+					fetch('./authenticate', null, function () {
+						console.log('Session created')
+						connectServer(function () {});
+					});	
+				});	
+			}
+		</script>
+	</body>
+</html>

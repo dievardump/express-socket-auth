@@ -20,7 +20,11 @@ A workaround is :
 
 # How to Use
 
-You should redirect your machine to have domains `server.dev` to  and `socket.dev` to point to `localhost`
+Clone this repository localy
+
+`npm install`
+
+You should redirect your machine to have domains `server.dev` to  and `socket.dev` to point to your `localhost` or `127.0.0.1` or whoever you installed this
 
 `node server.js`
 
